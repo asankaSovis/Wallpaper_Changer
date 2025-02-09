@@ -57,7 +57,17 @@ Further modifications can be done to the script itself if needed.
 
 ## 🖼️ Further Control
 
-1. The script can be temporarily stopped by killing the script.
+1. In case you want to pause the changing of wallpapers, you can create a file called `.override` inside the same `Wallpapers` directory which will pause the slideshow indefinitely until the file is deleted again.
+
+2. You can check the status of the script by using the following command.
+
+```bash
+systemctl --user status "change_wallpaper.service"
+```
+
+> NOTE: **Do not** run this command with `sudo`.
+
+3. The script can be temporarily stopped by killing the script.
 
 ```bash
 sudo kill -9 $(ps -eo pid,command | grep /bin/bash | grep live_wallpaper_script.sh | tr -d " " | tr "/" "\n" | head -n 1)
@@ -65,15 +75,15 @@ sudo kill -9 $(ps -eo pid,command | grep /bin/bash | grep live_wallpaper_script.
 
 > NOTE: **Have to** run this command with `sudo`.
 
-2. The script can be permanently stopped and removed by deleting the service file.
+4. The script can be permanently stopped and removed by deleting the service file.
 
 ```bash
-SERVICE_NAME="change_wallpaper.service"; systemctl --user disable $SERVICE_NAME; rm ~/.config/systemd/user/"$SERVICE_NAME"
+SERVICE_NAME="change_wallpaper.service"; systemctl --user stop $SERVICE_NAME; systemctl --user disable $SERVICE_NAME; rm ~/.config/systemd/user/"$SERVICE_NAME"
 ```
 
 > NOTE: **Do not** run this command with `sudo`.
 
-3. In case the script is modified, the service can be restarted to pull updates to the script.
+5. In case the script is modified, the service can be restarted to pull updates to the script.
 
 ```bash
 systemctl --user restart "change_wallpaper.service"
